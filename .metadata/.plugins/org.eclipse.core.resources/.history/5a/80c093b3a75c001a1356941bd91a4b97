@@ -1,0 +1,95 @@
+
+/*
+ * Assignment:  Word operations
+ *
+ * Description:
+ * This assignment asks you to implement common word operations that are
+ * not available in the Scala programming language. The intent is to practice
+ * your skills at working with bits.
+ *
+ */
+
+package object wordOps {
+  
+  def toHexString(v: Int): String = "0x%X".format(v)
+  
+  def convert(i: String): String = {
+    if (i == "0000") (0).toString()
+    else if (i == "0001") (1).toString()
+    else if (i == "0010") (2).toString()
+    else if (i == "0011") (3).toString()
+    else if (i == "0100") (4).toString()
+    else if (i == "0101") (5).toString()
+    else if (i == "0110") (6).toString()
+    else if (i == "0111") (7).toString()
+    else if (i == "1000") (8).toString()
+    else if (i == "1001") (9).toString()
+    else if (i == "1010") ('A').toString()
+    else if (i == "1011") ('B').toString()
+    else if (i == "1100") ('C').toString()
+    else if (i == "1101") ('D').toString()
+    else if (i == "1110") ("E").toString()
+    else if (i == "1111") ("F").toString()
+    else ""
+  }
+
+  /*
+   * Task 1: Population count (number of 1-bits in a word)
+   *
+   * Complete the following function that takes as parameter
+   * a 32-bit word, w, and returns __the number of 1-bits__ in w.
+   *
+   */
+
+  def popCount(w: Int): Int = {
+    var count = 0
+    val a = toHexString(w).drop(2)
+    for (i <- a) {
+      if (i == '1'|| i == '2'|| i == '4'|| i == '8') count += 1
+      else if (i == '3'|| i == '5'|| i == '6'|| i == '9'|| i == 'A'|| i == 'C') count += 2
+      else if (i == '7'||i == 'B'||i == 'D'||i == 'E') count += 3
+      else if (i == 'F') count += 4
+    }
+    count
+  }
+
+  /*
+   * Task 2: Reverse bit positions
+   *
+   * Complete the following function that takes as parameter
+   * a 16-bit word, w, and returns a 16-bit word, r, such that
+   * for every j=0,1,...,15,
+   * the value of the bit at position j in r is equal to
+   * the value of the bit at position 15-j in w.
+   *
+   */
+
+  def reverse(w: Short) = {
+    val a = new String((0 to 15).toArray.map(j => (w >> 15-j)&1)
+        .flatMap(b => "%d".format(b))).reverse.grouped(4).toList
+    var hex = new String("0x")
+    for (i <- a) {
+      hex ++ convert(i)
+    }
+    hex                 
+  }
+
+  /*
+   * Task 3: Left rotation
+   *
+   * Complete the following function that takes two parameters
+   *
+   * 1) a 64-bit word, w, and
+   * 2) a 32-bit word, k.
+   *
+   * The function returns a 64-bit word, r, such that
+   * for all j=0,1,...,63
+   * the value of the bit at position (j+k)%64 in r is equal to
+   * the value of the bit at position j in w.
+   *
+   */
+
+  def leftRotate(w: Long, k: Int): Long = ???
+}
+
+
